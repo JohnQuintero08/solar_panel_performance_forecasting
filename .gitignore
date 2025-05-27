@@ -1,0 +1,33 @@
+# Notebooks
+
+notebooks/
+
+# Temporal files 
+
+tmp/
+
+# Data
+
+pipeline/pp0_data/
+data/
+*.json
+*.feather
+
+
+# Environment
+venv/
+env/
+.venv/
+.env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# VSCode
+.vscode/
+
+# Variables de entorno
+.env
+.env.*
