@@ -1,9 +1,17 @@
 import pandas as pd
 import json
 
-with open('data/initial_data.json', 'r') as data:
-    data_json = json.load(data)
+def load_json_data(location):
+    with open(location, 'r') as data:
+        data_json = json.load(data)
+        
+    new_data = data_json['properties']['parameter']
+    df = pd.DataFrame(new_data).reset_index(names=['date'])
+    df.columns = ['date', 'irradiation', 'temperature', 'wind_speed', 'precipitation']
     
-new_data = data_json['properties']['parameter']
+    return df
 
-df = pd.DataFrame(new_data).reset_index()
+
+
+location = 'data/initial_data.json'
+df = load_json_data(location)
