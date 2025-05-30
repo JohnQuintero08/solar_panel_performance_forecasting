@@ -12,6 +12,6 @@ def load_json_data(location):
     return df
 
 
-
-location = 'data/initial_data.json'
-df = load_json_data(location)
+# Testing function
+# location = 'data/initial_data.json'
+# df = load_json_data(location)
