@@ -13,6 +13,7 @@ pipeline/pp0_data/
 data/
 *.json
 *.feather
+*.pickle
 
 
 # Environment
@@ -29,6 +30,11 @@ __pycache__/
 # VSCode
 .vscode/
 
-# Variables de entorno
+# Environment variables
 .env
 .env.*
+
+# Binaries
+*.png
+*.jpg
+*.pkl
