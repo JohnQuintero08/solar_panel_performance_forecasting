@@ -10,8 +10,3 @@ def load_json_data(location):
     df.columns = ['date', 'irradiation', 'temperature', 'wind_speed', 'precipitation']
     
     return df
-
-
-# Testing function
-# location = 'data/initial_data.json'
-# df = load_json_data(location)
