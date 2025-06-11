@@ -1,9 +1,10 @@
 import pandas as pd
 
 from insights.i_01_insights_functions import show_info, check_null_values, check_duplicates, plot_pairplot, plot_variable_hist, create_time_features, plot_scatter_trim_by_year, plot_seasonal_param, plot_seasonal_param_polar_trim, multi_lag_plot_trim, lag_plot_trim, plot_box
+from insights.i_02_time_series_decomposition import classic_decompose, stl_decompose, setup_df_decompose, check_residuals_by_period, print_residual, plot_decompose
 
 
-df = pd.read_feather('../data/preprocess_data.feather')
+df = pd.read_feather('data/preprocess_data.feather')
 
 
 show_info(df)
@@ -57,6 +58,15 @@ lag_plot_trim(new_df, 'temperature', 365)
 plot_box(new_df, 'irradiation', 2000, 2025, 2012)
 
 
+df_c = setup_df_decompose(df)
+
+print_residual(classic_decompose(df_c, 'irradiation', 360, 'multiplicative'))
 
 
+print_residual(stl_decompose(df_c, 'irradiation', 360))
 
+
+plot_decompose(stl_decompose(df_c, 'irradiation', 360), 'STL')
+
+
+check_residuals_by_period(df_c, 'irradiation', stl_decompose)
