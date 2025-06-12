@@ -57,6 +57,7 @@ lag_plot_trim(new_df, 'temperature', 365)
 
 plot_box(new_df, 'irradiation', 2000, 2025, 2012)
 
+# Time series decomposition
 
 df_c = setup_df_decompose(df)
 

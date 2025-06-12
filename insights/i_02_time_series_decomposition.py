@@ -53,10 +53,3 @@ def setup_df_decompose(df):
     df_c = df_c.asfreq('D', method='ffill')
     return df_c
     
-# df = pd.read_feather('data/preprocess_data.feather')
-# df_c = setup_df_decompose(df)
-
-# print_residual(classic_decompose(df_c, 'irradiation', 360, 'multiplicative'))
-# print_residual(stl_decompose(df_c, 'irradiation', 360))
-# plot_decompose(stl_decompose(df_c, 'irradiation', 360), 'STL')
-# check_residuals_by_period(df_c, 'irradiation', stl_decompose)
