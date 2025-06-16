@@ -54,3 +54,4 @@ def model_evaluation(model, df_train, df_valid, target_name, model_name, has_plo
         fig.suptitle(f'Comparison of the predictions - {model_name}', fontsize=16)
         plt.tight_layout()
         plt.show()
+
