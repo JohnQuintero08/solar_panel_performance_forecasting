@@ -38,3 +38,8 @@ __pycache__/
 *.png
 *.jpg
 *.pkl
+
+# MLFlow
+
+mlruns/
+# TODO REVISAR QUE PARTE DE LA CARPETA SE COMITEA Y QUE NO
