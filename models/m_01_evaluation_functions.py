@@ -11,21 +11,9 @@ def metrics_eval(target, predictions, dataset_name=""):
     print(f'RMSE: {rmse:.2f}')
     print(f'MAE: {mae:.2f}')
     return {
-        'rmse' : rmse,
-        'mae' : mae
+        f'rmse_{dataset_name}' : rmse,
+        f'mae_{dataset_name}' : mae
     }
-
-
-def graph_predictions_each_data(target, predictions):
-    plt.figure(figsize=(15,6))
-    arary_length = np.arange(len(target))
-    plt.scatter(arary_length, predictions, marker='*', label='Predictions', s=20, alpha=0.8)
-    plt.scatter(arary_length, target, label='Real values', s=20, alpha=0.8)
-    # plt.title('Price of the observation')
-    # plt.xlabel('Data number')
-    # plt.ylabel('Price')
-    plt.legend()
-    plt.show()
 
 
 def graph_predictions(target, predictions, ax, title):
@@ -37,47 +25,38 @@ def graph_predictions(target, predictions, ax, title):
     ax.legend(['Predictions', 'Ideal correlation'])
 
 
-def model_evaluation(model, df_train, df_valid, target_name, model_name, has_plot=False, second_df ='Validation'):
-
-    f_train, t_train = features_target_split(df_train, target_name)
-    f_valid, t_valid = features_target_split(df_valid, target_name)
-
-    model.fit(f_train, t_train, eval_set= [(f_train, t_train),(f_valid, t_valid)], verbose=20)
-    predictions_t = model.predict(f_train)
-    predictions_v = model.predict(f_valid)
-
-    print(f"Model evaluation: {model_name}")
-    metrics_eval(t_train, predictions_t, 'Train')
-    metrics_eval(t_valid, predictions_v, f'{second_df}')
-
-    if has_plot:
-        fig, axs = plt.subplots(1, 2, figsize=(15, 6))
-        graph_predictions(t_train, predictions_t, axs[0], 'Train')
-        graph_predictions(t_valid, predictions_v, axs[1], f'{second_df}')
-
-        fig.suptitle(f'Comparison of the predictions - {model_name}', fontsize=16)
-        plt.tight_layout()
-        plt.show()
-
-
-def model_evaluation_mlflow(model, df_train, df_pr, target_name, model_name):
+def model_evaluation_mlflow(model, df_train, df_pr, target_name, model_name,has_plot=False, df_name_1 ="train", df_name_2="valid"):
 
     f_train, t_train = features_target_split(df_train, target_name)
     f_pr, t_pr = features_target_split(df_pr, target_name)
 
     model.fit(f_train, t_train)
+    
+    predictions_t = model.predict(f_train)
     predictions_pr = model.predict(f_pr)
 
     print(f"Model evaluation: {model_name}")
-    metrics = metrics_eval(t_pr, predictions_pr)
+    metrics_t = metrics_eval(t_train, predictions_t, df_name_1)
+    metrics_pr = metrics_eval(t_pr, predictions_pr,df_name_2)
+    metrics = {**metrics_t, **metrics_pr}
+    
+    if has_plot:
+        fig, axs = plt.subplots(1, 2, figsize=(15, 6))
+        graph_predictions(t_train, predictions_t, axs[0], df_name_1)
+        graph_predictions(t_pr, predictions_pr, axs[1], df_name_2)
+
+        fig.suptitle(f'Comparison of the predictions - {model_name}', fontsize=16)
+        plt.tight_layout()
+        plt.show()
+        
     return metrics
 
 
-def arima_model_evaluation(model, df_to_predict, step, model_name, has_plot):
+def arima_model_evaluation_mlflow(model, df_to_predict, step, model_name, has_plot):
     results = model.fit()
     predictions = results.forecast(steps= step)
     print(f"Model evaluation: {model_name}")
-    metrics_eval(df_to_predict, predictions, 'Validation')
+    metrics = metrics_eval(df_to_predict, predictions, 'valid')
     
     if has_plot:
         plt.scatter(df_to_predict, predictions, s=20, alpha=0.8)
@@ -88,3 +67,4 @@ def arima_model_evaluation(model, df_to_predict, step, model_name, has_plot):
         plt.legend(['Predictions', 'Ideal correlation'])
         plt.tight_layout()
         plt.show()
+    return metrics
