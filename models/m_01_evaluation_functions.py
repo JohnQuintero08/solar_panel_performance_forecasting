@@ -1,5 +1,4 @@
 from matplotlib import pyplot as plt
-import numpy as np
 from sklearn.metrics import root_mean_squared_error, mean_absolute_error
 
 from features.f_05_features_target_split import features_target_split

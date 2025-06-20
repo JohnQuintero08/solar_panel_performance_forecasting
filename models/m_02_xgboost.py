@@ -4,13 +4,15 @@ import mlflow.data
 from mlflow.models import infer_signature
 import numpy as np
 from xgboost import XGBRegressor
+import dagshub
 
 from features.f_00_features import df_f_train, df_f_valid
 from models.m_01_evaluation_functions import model_evaluation_mlflow
 from features.f_05_features_target_split import features_target_split
 
 mlflow.set_experiment("Time series experiment")
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_tracking_uri("https://dagshub.com/JohnQuintero08/solar_panel_performance_forecasting.mlflow")
+dagshub.init(repo_owner='JohnQuintero08', repo_name='solar_panel_performance_forecasting', mlflow=True)
 
 def run_experiment():
   random_id_experiment = np.random.randint(0, 10000)
@@ -19,11 +21,11 @@ def run_experiment():
     xgboost_params = {
     'objective'     :'reg:squarederror',
     'eval_metric'   :'rmse',
-    'learning_rate' : 0.04, 
-    'max_depth'     : 20, 
+    'learning_rate' : 0.05, 
+    'max_depth'     : 6, 
     'subsample'     : 0.8,
     'colsample_bytree': 0.8,
-    'n_estimators'  : 200,
+    'n_estimators'  : 100,
     'alpha'         : 1,
     'random_state'  : 12345}
     # Create the model

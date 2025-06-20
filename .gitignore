@@ -31,8 +31,8 @@ __pycache__/
 .vscode/
 
 # Environment variables
-.env
-.env.*
+*.env
+*.env.*
 
 # Binaries
 *.png
