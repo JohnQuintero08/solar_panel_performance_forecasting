@@ -1,0 +1,5 @@
+outs:
+- md5: 7b4f0143c97ddb8ea40efdc6c24bccaa
+  size: 1134545
+  hash: md5
+  path: initial_data.json

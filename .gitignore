@@ -9,11 +9,10 @@ tmp/
 
 # Data
 
-pipeline/pp0_data/
-data/
-*.json
-*.feather
-*.pickle
+# pipeline/pp0_data/
+# data/
+# *.json
+# *.feather
 
 
 # Environment
@@ -37,9 +36,8 @@ __pycache__/
 # Binaries
 *.png
 *.jpg
-*.pkl
+# *.pkl
 
 # MLFlow
 
 mlruns/
-# TODO REVISAR QUE PARTE DE LA CARPETA SE COMITEA Y QUE NO
