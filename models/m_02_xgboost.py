@@ -49,6 +49,8 @@ def run_experiment(registration=False):
     mlflow.log_metrics(xgb_metrics)
     
     if registration:
-      mlflow.xgboost.log_model(model_xgboost, name="xgboost",)
+      f_t, t_t = features_target_split(df_f_train.iloc[0:1,:], 'irradiation')
+      signature = infer_signature(f_t, t_t)
+      mlflow.xgboost.log_model(model_xgboost, artifact_path="xgboost", signature=signature)
 
-run_experiment()
+run_experiment(True)
