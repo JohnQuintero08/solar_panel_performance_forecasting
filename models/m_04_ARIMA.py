@@ -3,12 +3,18 @@ import mlflow.data
 import mlflow.statsmodels
 import numpy as np
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+import os
+import dagshub
+from dotenv import load_dotenv
 
 from features.f_00_features import df_arima_train, df_arima_valid
 from models.m_01_evaluation_functions import arima_model_evaluation_mlflow
 
+load_dotenv()
+
 mlflow.set_experiment("Time series experiment")
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
+dagshub.init(repo_owner=os.getenv("MLFLOW_TRACKING_USERNAME"), repo_name='solar_panel_performance_forecasting', mlflow=True)
 
 def run_experiment():
 
@@ -26,7 +32,7 @@ def run_experiment():
         # Create the model
         model_sarima = SARIMAX(endog=df_arima_train,**sarima_params)
         # Evaluate the model comparing train and validation
-        sarima_metrics = arima_model_evaluation_mlflow(model_sarima, df_arima_valid, 45, 'SARIMA', True)
+        sarima_metrics = arima_model_evaluation_mlflow(model_sarima, df_arima_valid, 45, 'SARIMA', False)
         # Log the datasets
         ds_train = mlflow.data.from_pandas(df_arima_train, name='dataset arima', targets='irradiation')
         ds_val = mlflow.data.from_pandas(df_arima_valid, name='dataset arima', targets='irradiation')
