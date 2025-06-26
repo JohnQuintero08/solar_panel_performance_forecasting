@@ -56,6 +56,8 @@ def arima_model_evaluation_mlflow(model, df_to_predict, step, model_name, has_pl
     predictions = results.forecast(steps= step)
     print(f"Model evaluation: {model_name}")
     metrics = metrics_eval(df_to_predict, predictions, 'valid')
+    aic = results.aic
+    metrics = {'AIC': aic, **metrics}
     
     if has_plot:
         plt.scatter(df_to_predict, predictions, s=20, alpha=0.8)
@@ -66,4 +68,4 @@ def arima_model_evaluation_mlflow(model, df_to_predict, step, model_name, has_pl
         plt.legend(['Predictions', 'Ideal correlation'])
         plt.tight_layout()
         plt.show()
-    return metrics
+    return results, metrics
