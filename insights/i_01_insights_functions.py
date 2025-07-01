@@ -31,12 +31,14 @@ def plot_pairplot(df, columns_to_drop = ['date']):
     sns.pairplot(df.drop(columns_to_drop, axis=1))
     plt.show()
 
-def plot_variable_hist(df, param):
+def plot_variable_hist(df, param, save_fig=False):
     plt.figure(figsize=general_plot_size)
     sns.histplot(data=df, x=param, bins=100, kde=True)
     plt.title(f'Histogram of {param.capitalize()}')
     plt.xlabel(param.capitalize())
     plt.ylabel('Frequency')
+    if save_fig:
+        plt.savefig(f'data/plots/histogram_{param}.png')
     plt.show()
 
 def create_time_features(df):
@@ -47,13 +49,15 @@ def create_time_features(df):
     df_c['day_of_week'] = df_c['date'].dt.day_of_week
     return df_c
 
-def plot_scatter_trim_by_year(df, param, year=1999):
+def plot_scatter_trim_by_year(df, param, year=1999, save_fig=False):
     plt.figure(figsize=general_plot_size)
     plt.scatter(df.query(f'year > {year}')['date'], df.query(f'year > {year}')[param],
                 s=2,)
     plt.title(f'{param.capitalize()} distribution over time')
     plt.ylabel(param.capitalize())
     plt.xlabel('Year')
+    if save_fig:
+        plt.savefig(f'data/plots/{param}_distribution_from_{year}.png')
     plt.show()
 
 def plot_seasonal_param(df, param, year_from=2000, year_to=2025):
@@ -72,7 +76,7 @@ def plot_seasonal_param(df, param, year_from=2000, year_to=2025):
     plt.show()
 
 
-def plot_seasonal_param_polar_trim(df, param, year_from=2000, year_to=2025):
+def plot_seasonal_param_polar_trim(df, param, year_from=2000, year_to=2025, save_fig=False):
     plt.figure(figsize=(8, 8))
     ax = plt.subplot(111, polar=True)
     years = df.query(f'year >= {year_from} and year <= {year_to}')['year'].unique()
@@ -98,6 +102,8 @@ def plot_seasonal_param_polar_trim(df, param, year_from=2000, year_to=2025):
     ax.legend(loc='upper right', bbox_to_anchor=(1.1, 1.1))
 
     plt.tight_layout()
+    if save_fig:
+        plt.savefig(f'data/plots/monthly_{param}_distribution.png')
     plt.show()
 
 

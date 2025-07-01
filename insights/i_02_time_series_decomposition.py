@@ -3,7 +3,7 @@ import numpy as np
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 from matplotlib import pyplot as plt
 
-def plot_decompose(decomposition, method_name):
+def plot_decompose(decomposition, method_name, param,  save_fig=False):
     fig, axs = plt.subplots(4, 1, figsize=(15, 10), sharex=True)
 
     axs[0].plot(decomposition.observed)
@@ -21,6 +21,8 @@ def plot_decompose(decomposition, method_name):
     plt.suptitle(f'Time series decomposition using {method_name}', fontsize=16)
     plt.tight_layout()
     plt.subplots_adjust(top=0.9)
+    if save_fig:
+        plt.savefig(f'data/plots/seasonal_decomposition_{param}.png')
     plt.show()
 
 def print_residual(decompose):

@@ -16,13 +16,13 @@ check_null_values(df)
 check_duplicates(df)
 
 
-plot_variable_hist(df, 'irradiation')
+plot_variable_hist(df, 'irradiation', True)
 
 
 new_df = create_time_features(df)
 
 
-plot_scatter_trim_by_year(new_df,'irradiation',2012)
+plot_scatter_trim_by_year(new_df,'irradiation',2012, True)
 
 
 plot_scatter_trim_by_year(new_df,'precipitation',2012)
@@ -37,7 +37,7 @@ plot_scatter_trim_by_year(new_df,'temperature',2012)
 plot_seasonal_param(new_df,'irradiation', 2012, 2025)
 
 
-plot_seasonal_param_polar_trim(new_df, 'irradiation', 2012, 2025)
+plot_seasonal_param_polar_trim(new_df, 'irradiation', 2012, 2025, True)
 
 
 multi_lag_plot_trim(new_df, 'irradiation', 2012, 2025)
@@ -67,7 +67,7 @@ print_residual(classic_decompose(df_c, 'irradiation', 360, 'multiplicative'))
 print_residual(stl_decompose(df_c, 'irradiation', 360))
 
 
-plot_decompose(stl_decompose(df_c, 'irradiation', 360), 'STL')
+plot_decompose(stl_decompose(df_c, 'irradiation', 360), 'STL', 'irradiation', True)
 
 
 check_residuals_by_period(df_c, 'irradiation', stl_decompose)
