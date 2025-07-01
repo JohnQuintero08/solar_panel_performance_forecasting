@@ -9,7 +9,7 @@ import os
 import yaml
 from xgboost import XGBRegressor
 
-from features.f_00_features import df_f
+from features.f_00_features import df_f, df_f_selected
 from models.m_01_evaluation_functions import model_evaluation_mlflow
 from features.f_05_features_target_split import features_target_split
 from features.f_06_train_valid_test_split import split_df_for_model

@@ -32,7 +32,14 @@ grid_search.fit(features_cross_validation, target_cross_validation)
 
 
 best_xgb = grid_search.best_estimator_
-
-
 grid_search.best_params_
 # {'colsample_bytree': 1, 'learning_rate': 0.05, 'max_depth': 6, 'n_estimators': 100, 'subsample': 0.8}
+
+dict_importances = {
+    'names' : best_xgb.feature_names_in_,
+    'importance' : best_xgb.feature_importances_
+}
+
+feature_importances_df = pd.DataFrame(dict_importances).sort_values('importance', ascending=False)
+
+# The 3 most important features are {rolling_irradiation_1p  9.988664e-01, rolling_temperature_3p  3.605045e-04, precipitation_lag1  2.508311e-04}
